@@ -109,6 +109,9 @@ typedef struct {
 // Procedure definitions
 void ssd1306_Init(void);
 void ssd1306_Fill(SSD1306_COLOR color);
+void ssd1306_FillHour(SSD1306_COLOR color);//add
+void ssd1306_FillMin(SSD1306_COLOR color); //add
+void ssd1306_FillSec(SSD1306_COLOR color);//add
 void ssd1306_UpdateScreen(void);
 void ssd1306_UpdateScreenRightSide();
 void ssd1306_DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color);

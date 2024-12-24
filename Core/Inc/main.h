@@ -32,6 +32,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app.h"
+#include "uart.h"
 #include "ssd1306.h"
 #include <stdio.h>
 #include <math.h>
@@ -60,6 +61,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define SW_Pin GPIO_PIN_13
+#define SW_GPIO_Port GPIOC
+#define QuadA_Pin GPIO_PIN_6
+#define QuadA_GPIO_Port GPIOA
+#define QuadB_Pin GPIO_PIN_7
+#define QuadB_GPIO_Port GPIOA
 #define OledReset_Pin GPIO_PIN_8
 #define OledReset_GPIO_Port GPIOA
 

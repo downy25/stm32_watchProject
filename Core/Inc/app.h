@@ -10,6 +10,10 @@
 
 #include "main.h"
 
+void AnalogClock();
+void DigitClock();
+void DisplayStr();
 void app();
+void Uart();
 
 #endif /* INC_APP_H_ */

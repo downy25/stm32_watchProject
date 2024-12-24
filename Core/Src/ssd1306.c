@@ -222,10 +222,46 @@ void ssd1306_ScrollStop(void)
 void ssd1306_Fill(SSD1306_COLOR color) {
     /* Set memory */
     uint32_t i;
-
+    //printf("size : %d\n",sizeof(SSD1306_Buffer[0])); //buffer size = 1024 1층에 1024
     for(i = 0; i < sizeof(SSD1306_Buffer); i++) {
         SSD1306_Buffer[i] = (color == Black) ? 0x00 : 0xFF;
     }
+
+}
+//시간부분만 검정색처리
+void ssd1306_FillHour(SSD1306_COLOR color){
+	/* Set memory */
+	uint32_t i,j;
+	for (i = 0; i < 8; i++) {
+		for(j = 0; j<=37; j++){   //38~42까지 첫번째:포함
+			SSD1306_Buffer[i*128+j]=(color == Black) ? 0x00 : 0xFF;
+		}
+	}
+	ssd1306_UpdateScreen();
+}
+
+//minute 부분만 검정색처리
+void ssd1306_FillMin(SSD1306_COLOR color){
+	/* Set memory */
+	uint32_t i,j;
+	for (i = 0; i < 8; i++) {
+		for(j = 43; j<=81; j++){   //38~42까지 첫번째:포함
+			SSD1306_Buffer[i*128+j]=(color == Black) ? 0x00 : 0xFF;
+		}
+	}
+	ssd1306_UpdateScreen();
+}
+
+//second 부분만 검정색처리
+void ssd1306_FillSec(SSD1306_COLOR color){
+	/* Set memory */
+	uint32_t i,j;
+	for (i = 0; i < 8; i++) {
+		for(j = 92; j<=127; j++){   //38~42까지 첫번째:포함
+			SSD1306_Buffer[i*128+j]=(color == Black) ? 0x00 : 0xFF;
+		}
+	}
+	ssd1306_UpdateScreen();
 }
 
 // Write the screenbuffer with changed to the screen
@@ -539,4 +575,19 @@ void ssd1306_SetDisplayOn(const uint8_t on) {
 
 uint8_t ssd1306_GetDisplayOn() {
     return SSD1306.DisplayOn;
+}
+
+void ssd1306_softScroll_Right(){
+	// 버퍼 전체를 오른쪽으로 이동
+	uint8_t tmpBuffer[1024];
+	memcpy(tmpBuffer,SSD1306_Buffer,1024);
+	memcpy(&SSD1306_Buffer[1],tmpBuffer,1023);
+	//왼쪽 끝의 버퍼를 비우기
+	for(int i=0;i<8;i++)SSD1306_Buffer[i*128] = 0;
+}
+void ssd1306_softScroll_Left(){
+	// 버퍼 전체를 왼쪽으로 이동
+	memcpy(&SSD1306_Buffer[0], &SSD1306_Buffer[1],1023);
+	// 오른쪽 끝의 버퍼를 비우기
+	for(int i=0; i<8;i++)SSD1306_Buffer[i*128+127]=0;
 }
